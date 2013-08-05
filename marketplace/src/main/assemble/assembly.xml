@@ -5,6 +5,7 @@
   <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
   <taskdef resource="org/nuxeo/build/artifact/antlib.xml"
            uri="urn:nuxeo-artifact" />
+  <taskdef resource="net/sf/antcontrib/antlib.xml" />
 
   <target name="init" unless="init.done">
     <property name="outdir" value="${maven.project.build.directory}" />
@@ -14,8 +15,7 @@
 
   <target name="expand">
     <!-- Include your artifacts in the graph adding your groupId to groupPrefixes -->
-    <artifact:nuxeo-expand includeTestScope="true"
-                           groupPrefixes="org.nuxeo,com.nuxeo" />
+    <artifact:nuxeo-expand includeTestScope="true" groupPrefixes="org.nuxeo" />
     <!-- For Nuxeo IDE being able to use that distribution as a SDK -->
     <artifact:print output="${outdir}/artifacts-multi-tenant.properties" mode="sdk" />
     <artifact:print output="${outdir}/test-artifacts-multi-tenant.properties"
@@ -47,7 +47,7 @@
 
     <!-- Base distribution NXR -->
     <copy todir="${outdir}">
-      <artifact:resolveFile key="org.nuxeo.ecm.distribution:nuxeo-distribution-cap::zip" />
+      <artifact:resolveFile key="org.nuxeo.ecm.distribution:nuxeo-distribution-dm::zip" />
     </copy>
 
     <!-- Nuxeo bundles -->
@@ -55,8 +55,6 @@
       <artifact:set>
         <includes>
           <artifact groupId="org.nuxeo*" scope="!test" type="!pom" />
-          <!-- Include your artifacts using their groupId for instance -->
-          <artifact groupId="com.nuxeo*" scope="!test" type="!pom" />
         </includes>
       </artifact:set>
     </copy>
@@ -66,10 +64,6 @@
         <includes>
           <artifact groupId="!org.nuxeo*" scope="!test" />
         </includes>
-        <excludes>
-          <!-- Filter out your artifacts using their groupId for instance -->
-          <artifact groupId="com.nuxeo*" />
-        </excludes>
       </artifact:set>
     </copy>
     <move todir="${outdir}/nxr/lib">
@@ -85,15 +79,41 @@
 
     <!-- Your MP only needs to include files not already provided by the base distribution -->
     <nx:zipdiff file1="${outdir}/nxr-${marketplace.multi.tenant.version}.zip"
-                file2="${outdir}/nuxeo-distribution-cap-${nuxeo.distribution.version}.zip"
+                file2="${outdir}/nuxeo-distribution-dm-${nuxeo.distribution.version}.zip"
                 includesfile="${outdir}/includes"
                 excludesfile="${outdir}/excludesfile"
-                patternsetid="multi.tenant.versus.cap">
+                patternsetid="multi.tenant.versus.dm">
     </nx:zipdiff>
     <unzip src="${outdir}/nxr-${marketplace.multi.tenant.version}.zip"
            dest="${outdir}/marketplace/install">
-      <patternset refid="multi.tenant.versus.cap" />
+      <patternset refid="multi.tenant.versus.dm" />
     </unzip>
+
+    <!-- Generate install.xml file -->
+    <!-- See documentation at http://doc.nuxeo.com/x/IgIz -->
+    <var name="install.content" value="&lt;install&gt;" />
+    <var name="install.content"
+         value="${install.content}${line.separator}
+  &lt;update file=&quot;${package.root}/install/bundles&quot; todir=&quot;${env.bundles}&quot; /&gt;" />
+    <if>
+      <available file="${outdir}/marketplace/install/lib" />
+      <then>
+        <var name="install.content"
+             value="${install.content}${line.separator}
+  &lt;update file=&quot;${package.root}/install/lib&quot; todir=&quot;${env.lib}&quot; /&gt;" />
+      </then>
+    </if>
+    <var name="install.content"
+         value="${install.content}${line.separator}
+  &lt;copy file=&quot;${package.root}/install/artifacts-multi-tenant.properties&quot;${line.separator}
+    todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
+  &lt;copy file=&quot;${package.root}/install/test-artifacts-multi-tenant.properties&quot;${line.separator}
+    todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}" />
+    <var name="install.content"
+         value="${install.content}${line.separator}
+&lt;/install&gt;${line.separator}" />
+    <echo file="${outdir}/marketplace/install.xml"
+          message="${install.content}" />
 
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip"
          basedir="${outdir}/marketplace" />
