@@ -1,4 +1,4 @@
-<project name="nuxeo-assembly"
+<project name="multi-tenant-assembly"
          default="build"
          xmlns:nx="urn:nuxeo-build"
          xmlns:artifact="urn:nuxeo-artifact">
@@ -17,7 +17,8 @@
     <!-- Include your artifacts in the graph adding your groupId to groupPrefixes -->
     <artifact:nuxeo-expand includeTestScope="true" groupPrefixes="org.nuxeo" />
     <!-- For Nuxeo IDE being able to use that distribution as a SDK -->
-    <artifact:print output="${outdir}/artifacts-multi-tenant.properties" mode="sdk" />
+    <artifact:print output="${outdir}/artifacts-multi-tenant.properties"
+                    mode="sdk" />
     <artifact:print output="${outdir}/test-artifacts-multi-tenant.properties"
                     mode="sdk"
                     scopes="test" />
@@ -111,7 +112,7 @@
     </if>
 
     <var name="install.properties"
-          value="${line.separator}
+         value="${line.separator}
   &lt;copy file=&quot;${package.root}/install/artifacts-multi-tenant.properties&quot;${line.separator}
     todir=&quot;${env.server.home}/sdk&quot; overwrite=&quot;true&quot; /&gt;${line.separator}
   &lt;copy file=&quot;${package.root}/install/test-artifacts-multi-tenant.properties&quot;${line.separator}
@@ -142,7 +143,6 @@
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip"
          basedir="${outdir}/marketplace" />
     <artifact:attach file="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip"
-                     target="${maven.project.groupId}:${maven.project.artifactId}"
                      type="zip" />
   </target>
 
