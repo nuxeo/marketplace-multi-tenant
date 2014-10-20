@@ -17,10 +17,7 @@
   <platforms>
     <platform>cap-@DISTRIB_VERSION@</platform>
   </platforms>
-  <dependencies>
-    <package>nuxeo-dm:@DISTRIB_VERSION@</package>
-  </dependencies>
-  <license>LGPL</license>
-  <license-url>http://www.gnu.org/licenses/lgpl.html</license-url>
+  <license>LGPL 2.1</license>
+  <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
   <visibility>MARKETPLACE</visibility>
 </package>
