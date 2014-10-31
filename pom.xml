@@ -10,10 +10,10 @@
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Multi Tenant Marketplace package</name>
-  <version>1.3.5-SNAPSHOT</version>
+  <version>1.4.0-SNAPSHOT</version>
 
   <properties>
-    <marketplace.multi.tenant.version>1.3.5-SNAPSHOT</marketplace.multi.tenant.version>
+    <marketplace.multi.tenant.version>1.4.0-SNAPSHOT</marketplace.multi.tenant.version>
   </properties>
 
   <modules>
