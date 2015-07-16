@@ -3,17 +3,17 @@
   <parent>
     <groupId>org.nuxeo.ecm.distribution</groupId>
     <artifactId>nuxeo-distribution</artifactId>
-    <version>6.0-HF17-SNAPSHOT</version>
+    <version>6.0-HF16</version>
   </parent>
 
   <groupId>org.nuxeo.marketplace.multi.tenant</groupId>
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
   <name>Nuxeo Multi Tenant Marketplace package</name>
-  <version>1.4.1-SNAPSHOT</version>
+  <version>1.4.1</version>
 
   <properties>
-    <marketplace.multi.tenant.version>1.4.1-SNAPSHOT</marketplace.multi.tenant.version>
+    <marketplace.multi.tenant.version>1.4.1</marketplace.multi.tenant.version>
   </properties>
 
   <modules>
