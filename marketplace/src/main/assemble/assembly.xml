@@ -1,10 +1,6 @@
-<project name="multi-tenant-assembly"
-         default="build"
-         xmlns:nx="urn:nuxeo-build"
-         xmlns:artifact="urn:nuxeo-artifact">
+<project name="multi-tenant-assembly" default="build" xmlns:nx="urn:nuxeo-build" xmlns:artifact="urn:nuxeo-artifact">
   <taskdef resource="org/nuxeo/build/antlib.xml" uri="urn:nuxeo-build" />
-  <taskdef resource="org/nuxeo/build/artifact/antlib.xml"
-           uri="urn:nuxeo-artifact" />
+  <taskdef resource="org/nuxeo/build/artifact/antlib.xml" uri="urn:nuxeo-artifact" />
   <taskdef resource="net/sf/antcontrib/antlib.xml" />
 
   <target name="init" unless="init.done">
@@ -17,18 +13,13 @@
     <!-- Include your artifacts in the graph adding your groupId to groupPrefixes -->
     <artifact:nuxeo-expand includeTestScope="true" groupPrefixes="org.nuxeo" />
     <!-- For Nuxeo IDE being able to use that distribution as a SDK -->
-    <artifact:print output="${outdir}/artifacts-multi-tenant.properties"
-                    mode="sdk" />
-    <artifact:print output="${outdir}/test-artifacts-multi-tenant.properties"
-                    mode="sdk"
-                    scopes="test" />
+    <artifact:print output="${outdir}/artifacts-multi-tenant.properties" mode="sdk" />
+    <artifact:print output="${outdir}/test-artifacts-multi-tenant.properties" mode="sdk" scopes="test" />
     <!-- Prints the graph for debugging purpose -->
     <artifact:print output="${outdir}/dependency-tree.log" />
   </target>
 
-  <target name="build"
-          depends="init"
-          description="Build Nuxeo Multi Tenant Marketplace package">
+  <target name="build" depends="init" description="Build Nuxeo Multi Tenant Marketplace package">
     <tstamp />
     <delete failonerror="false" dir="${outdir}/nxr" />
     <mkdir dir="${outdir}/nxr" />
@@ -41,10 +32,8 @@
         <filter token="DISTRIB_VERSION" value="${nuxeo.distribution.version}" />
       </filterset>
     </copy>
-    <copy file="${outdir}/artifacts-multi-tenant.properties"
-          todir="${outdir}/marketplace/install" />
-    <copy file="${outdir}/test-artifacts-multi-tenant.properties"
-          todir="${outdir}/marketplace/install" />
+    <copy file="${outdir}/artifacts-multi-tenant.properties" todir="${outdir}/marketplace/install" />
+    <copy file="${outdir}/test-artifacts-multi-tenant.properties" todir="${outdir}/marketplace/install" />
 
     <!-- Base distribution NXR -->
     <copy todir="${outdir}">
@@ -57,6 +46,9 @@
         <includes>
           <artifact groupId="org.nuxeo*" scope="!test" type="!pom" />
         </includes>
+        <excludes>
+          <artifact groupId="org.nuxeo.lib*" />
+        </excludes>
       </artifact:set>
     </copy>
     <!-- Third-party libraries -->
@@ -64,19 +56,13 @@
       <artifact:set>
         <includes>
           <artifact groupId="!org.nuxeo*" scope="!test" />
+          <artifact groupId="org.nuxeo.lib*" scope="!test" />
         </includes>
       </artifact:set>
     </copy>
-    <move todir="${outdir}/nxr/lib">
-      <fileset dir="${outdir}/nxr/bundles">
-        <include name="nuxeo-generic-wss-front*" />
-        <include name="nuxeo-generic-wss-handler*" />
-      </fileset>
-    </move>
     <nx:rmdups dir="${outdir}/nxr/lib" />
     <!-- Temporary ZIP Nuxeo NXR to compare with base distribution NXR -->
-    <zip destfile="${outdir}/nxr-${marketplace.multi.tenant.version}.zip"
-         basedir="${outdir}/nxr" />
+    <zip destfile="${outdir}/nxr-${marketplace.multi.tenant.version}.zip" basedir="${outdir}/nxr" />
 
     <!-- Your MP only needs to include files not already provided by the base distribution -->
     <nx:zipdiff file1="${outdir}/nxr-${marketplace.multi.tenant.version}.zip"
@@ -85,8 +71,7 @@
                 excludesfile="${outdir}/excludesfile"
                 patternsetid="multi.tenant.versus.cap">
     </nx:zipdiff>
-    <unzip src="${outdir}/nxr-${marketplace.multi.tenant.version}.zip"
-           dest="${outdir}/marketplace/install">
+    <unzip src="${outdir}/nxr-${marketplace.multi.tenant.version}.zip" dest="${outdir}/marketplace/install">
       <patternset refid="multi.tenant.versus.cap" />
     </unzip>
 
@@ -129,9 +114,7 @@
       </then>
     </if>
 
-    <copy file="src/main/resources/install.xml"
-          todir="${outdir}/marketplace"
-          overwrite="true">
+    <copy file="src/main/resources/install.xml" todir="${outdir}/marketplace" overwrite="true">
       <filterset>
         <filter token="BUNDLES" value="${install.bundles}" />
         <filter token="LIBS" value="${install.libs}" />
@@ -142,8 +125,7 @@
 
     <zip destfile="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip"
          basedir="${outdir}/marketplace" />
-    <artifact:attach file="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip"
-                     type="zip" />
+    <artifact:attach file="${outdir}/${maven.project.artifactId}-${marketplace.multi.tenant.version}.zip" type="zip" />
   </target>
 
 </project>
