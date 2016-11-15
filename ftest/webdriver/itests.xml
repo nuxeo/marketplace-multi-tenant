@@ -9,10 +9,11 @@
   </unzip>
   <import file="${out.dir}/nuxeo-ftest.xml" />
 
-  <property name="mp.install"
-            value="file:${out.dir}/marketplace-multi-tenant-${marketplace.multi.tenant.version}.zip" />
+  <property name="mp.install" value="file:${out.dir}/nuxeo-marketplace-jsf-ui-${nuxeo.distribution.version}.zip,
+    file:${out.dir}/marketplace-multi-tenant-${marketplace.multi.tenant.version}.zip" />
   <target name="prepare-environment" depends="_init,prepare-db,prepare-tomcat">
     <copy todir="${out.dir}">
+      <artifact:file key="org.nuxeo.ecm.distribution:nuxeo-marketplace-jsf-ui::zip" />
       <artifact:file key="org.nuxeo.marketplace.multi.tenant:marketplace-multi-tenant::zip" />
     </copy>
   </target>
