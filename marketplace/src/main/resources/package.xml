@@ -1,9 +1,7 @@
 <!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
 <package type="addon" name="nuxeo-multi-tenant" version="@VERSION@">
   <title>Nuxeo Multi Tenant</title>
-  <description>
-    <p>This addon provides support for multi-tenancy on the Nuxeo Platform with both domain and local configuration.</p>
-    <p>Application-level multi-tenancy provides one instance for multiple clients, with tenant-specific data such as users, groups, vocabularies, document types, and themes.</p>
+  <description>The Nuxeo Multi-tenant addon enables to have domains, or tenants, that are independent from each other, with their own users and vocabulary values, as well as a low level fiter on content depending on tenant id. 
   </description>
   <home-page>http://doc.nuxeo.com/x/iIGo</home-page>
   <vendor>Nuxeo</vendor>
