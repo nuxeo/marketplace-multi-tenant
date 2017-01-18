@@ -27,7 +27,11 @@
 
     <dependency>
       <groupId>org.nuxeo.multi.tenant</groupId>
-      <artifactId>nuxeo-multi-tenant</artifactId>
+      <artifactId>nuxeo-multi-tenant-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.nuxeo.multi.tenant</groupId>
+      <artifactId>nuxeo-multi-tenant-jsf</artifactId>
     </dependency>
   </dependencies>
 

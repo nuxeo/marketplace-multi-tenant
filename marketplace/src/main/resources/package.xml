@@ -16,9 +16,9 @@
     <platform>server-@DISTRIB_VERSION@</platform>
     <platform>server-@DISTRIB_VERSION@-*</platform>
   </platforms>
-  <dependencies>
+  <optional-dependencies>
     <package>nuxeo-jsf-ui</package>
-  </dependencies>
+  </optional-dependencies>
   <license>LGPL 2.1</license>
   <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
   <visibility>MARKETPLACE</visibility>
