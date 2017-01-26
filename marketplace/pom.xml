@@ -28,12 +28,12 @@
     <dependency>
       <groupId>org.nuxeo.multi.tenant</groupId>
       <artifactId>nuxeo-multi-tenant-core</artifactId>
-      <version>8.10</version>
+      <version>8.10.1</version>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.multi.tenant</groupId>
       <artifactId>nuxeo-multi-tenant-jsf</artifactId>
-      <version>8.10</version>
+      <version>8.10.1</version>
     </dependency>
   </dependencies>
 
