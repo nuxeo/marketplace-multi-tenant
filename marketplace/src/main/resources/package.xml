@@ -3,7 +3,7 @@
   <title>Nuxeo Multi Tenant</title>
   <description>The Nuxeo Multi-tenant addon enables to have domains, or tenants, that are independent from each other, with their own users and vocabulary values, as well as a low level fiter on content depending on tenant id. 
   </description>
-  <home-page>http://doc.nuxeo.com/x/iIGo</home-page>
+  <home-page>https://doc.nuxeo.com/userdoc/nuxeo-multi-tenant/</home-page>
   <vendor>Nuxeo</vendor>
   <installer restart="true" />
   <uninstaller restart="true" />
